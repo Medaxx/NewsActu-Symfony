@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,9 +50,12 @@ class Categorie
      */
     private $no;
 
+    // Fonction magique de PHP, il en existe plusieurs. Ces fonctions sont automatiquement éxécutées.
     public function __construct()
     {
         $this->no = new ArrayCollection();
+        $this->createdAt = new DateTime();
+        $this->UpdatedAt = new DateTime();
     }
 
     public function getId(): ?int
