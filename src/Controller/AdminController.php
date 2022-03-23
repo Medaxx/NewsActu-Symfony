@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Form\ArticleFormType;
 use DateTime;
+use App\Entity\User;
+use App\Entity\Article;
+use App\Entity\Categorie;
+use App\Form\ArticleFormType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/admin")
@@ -21,13 +25,34 @@ class AdminController extends AbstractController
 {
     /**
      * @Route ("/tableau-de-bord", name="show_dashboard", methods={"GET"})
+     * @ // IsGranted("ROLE_ADMIN")
      */
     public function showDashboard(EntityManagerInterface $entityManager): Response
     {
+        // try/catch fait partie du PHP nativement.
+        // Cela a été créé pour gérer les class Exception (erreur.)
+        // On se sert d'un try/catch lorsqu'on utilise des méthodes (fonctions) qui lance (throw) une Exception.
+        
+
+        try {
+            
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        }
+        catch(AccessDeniedException $exception){
+            $this->addFlash('warning', 'Cette partie du site est réservée.');
+            return $this->redirectToRoute('default_home');
+        }
+
         $articles = $entityManager->getRepository(Article::class)->findAll();
+        $categories = $entityManager->getRepository(Categorie::class)->findAll();
+        $users = $entityManager->getRepository(User::class)->findAll();
+
 
         return $this->render('admin/show_dashboard.html.twig', [
             'articles' => $articles,
+            'categories' => $categories,
+            'users' => $users,
         ]);
             
     }
@@ -52,6 +77,9 @@ class AdminController extends AbstractController
             $article->setAlias($slugger->slug($article->getTitle() ) );
             $article->setCreatedAt(new DateTime());
             $article->setUpdatedAt(new DateTime());
+
+            // Association d'un auteur à un article
+            $article->setAuthor($this->getUser());
 
             // Variabilisation du fichier 'photo' uploadé.
             $file = $form->get('photo')->getData();
