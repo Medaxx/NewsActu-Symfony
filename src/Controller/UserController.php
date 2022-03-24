@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Form\RegisterFormTypePhpType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
@@ -49,6 +49,28 @@ class UserController extends AbstractController
         
         return $this->render('user/register.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("modifier-un-user/{id}", name="update_user", methods={"GET|POST"})
+     */
+    public function updateUser(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $form = $this->createForm(RegisterFormTypePhpType::class, $user)->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setUpdatedAt(new DateTime());
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', "Vous avez maintenant modifié votre compte avec succés !");
+            return $this->redirectToRoute('show_profile');
+
+        }
+        return $this->render('user/update_user.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

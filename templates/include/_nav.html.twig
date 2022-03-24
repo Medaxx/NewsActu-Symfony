@@ -21,6 +21,19 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_logout')}}">Se déconnecter</a>
         </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Mon profil
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfil">
+              <li><a class="dropdown-item" href="{{ path ('show_profile')}}">Mes informations</a></li>
+              <li><a class="dropdown-item" href="{{ path ('show_user_commentaries')}}">Mes commentaires</a></li>
+
+
+              {# <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+            </ul>
+          </li>
         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}
@@ -36,22 +49,6 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li> #}
             </ul>
           </li>
-
-        {% else %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Mon profil
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfil">
-              <li><a class="dropdown-item" href="{{ path ('show_profile')}}">Mes informations</a></li>
-              <li><a class="dropdown-item" href="#">Mes commentaires</a></li>
-
-
-              {# <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li> #}
-            </ul>
-          </li>
-
         {% endif %}
       </ul>
       {% if app.user %}
