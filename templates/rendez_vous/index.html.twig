@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rendez Vous{% endblock %}
+
+{% block body %}
+    <h1>Rendez-Vous</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rendez_vou in rendez_vouses %}
+            <tr>
+                <td>{{ rendez_vou.user.nom ~ "  " ~ rendez_vou.user.prenom }}</td>
+                <td>{{ rendez_vou.date ? rendez_vou.date|date('Y-m-d') : '' }}</td>
+                <td>{{ rendez_vou.heure }}</td>
+                <td>
+                    <a href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}">voir les détails du rendez-vous</a>
+                    <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun rendez-vous trouvés.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_rendez_vous_new') }}">Prendre un rendez-vous</a>
+{% endblock %}

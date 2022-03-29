@@ -25,6 +25,11 @@ class ProfileController extends AbstractController
     {
         $commentaries = $entityManager->getRepository(Commentary::class)->findBy(['author' => $this->getUser()]);
 
+        // Statistiques depuis le Controller (voir la vue show_user_commentaries.html.twig)
+        $total = count($commentaries);
+
+        // dd($total);
+
         return $this->render('profile/show_user_commentaries.html.twig', [
             'commentaries' => $commentaries
         ]);

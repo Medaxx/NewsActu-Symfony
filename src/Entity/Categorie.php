@@ -50,12 +50,18 @@ class Categorie
      */
     private $no;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="categorie")
+     */
+    private $rendezVouses;
+
     // Fonction magique de PHP, il en existe plusieurs. Ces fonctions sont automatiquement éxécutées.
     public function __construct()
     {
         $this->no = new ArrayCollection();
         $this->createdAt = new DateTime();
         $this->UpdatedAt = new DateTime();
+        $this->rendezVouses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +153,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($no->getCategory() === $this) {
                 $no->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVouses(): Collection
+    {
+        return $this->rendezVouses;
+    }
+
+    public function addRendezVouse(RendezVous $rendezVouse): self
+    {
+        if (!$this->rendezVouses->contains($rendezVouse)) {
+            $this->rendezVouses[] = $rendezVouse;
+            $rendezVouse->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVouse(RendezVous $rendezVouse): self
+    {
+        if ($this->rendezVouses->removeElement($rendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVouse->getCategorie() === $this) {
+                $rendezVouse->setCategorie(null);
             }
         }
 

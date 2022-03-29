@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Categorie;
+use App\Form\SearchFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +34,18 @@ class DefaultController extends AbstractController
 
         return $this->render('rendered/nav_categories.html.twig', [
             'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("", name="render_search_bar", methods={"GET"})
+     */
+    public function renderSearchBarInNav(): Response
+    {
+        $form = $this->createForm(SearchFormType::class)->handleRequest($request);
+        return $this->render('rendered/search_bar.html.twig', [
+        'form' => $form->createView()
+
         ]);
     }
 }

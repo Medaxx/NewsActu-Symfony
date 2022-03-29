@@ -21,37 +21,15 @@ class ArticleFormType extends AbstractType
     {
         $builder
         ->add('title', TextType::class, [
-            'label' => 'Titre de l\'article',
-            'constraints' => [ 
-                new NotBlank([
-                    'message' => "Ce champ ne peut être vide"
-                ]),
-                new Length([
-                    'min' => 5,
-                    'max' => 255,
-                    'minMessage' => " Votre titre est trop court. Le nombre de caractères minimal est {{ limit }}",
-                    'maxMessage' => " Votre titre est trop long. Le nombre de caractères maximal est {{ limit }}",
-                ])
-            ],
+            'label' => 'Titre de la coupe'
         ])
         ->add('subtitle', TextType::class, [
             'label' => 'Sous-titre',
-            'constraints' => [ 
-                new NotBlank([
-                    'message' => "Ce champ ne peut être vide"
-                ]),
-                new Length([
-                    'min' => 5,
-                    'max' => 255,
-                    'minMessage' => " Votre sous-titre est trop court. Le nombre de caractères minimal est {{ limit }}",
-                    'maxMessage' => " Votre sous-titre est trop long. Le nombre de caractères maximal est {{ limit }}",
-                ])
-            ],
         ])
         ->add('content', TextareaType::class, [
             'label' => false,
             'attr' => [
-                'placeholder' => 'Ici le contenu de l\'article'
+                'placeholder' => 'Ici le contenu de l\'article concernant la coupe'
             ],
             // Les contraintes de validation pour 'content' sont dans Article Entity (propriété $content)
         ])

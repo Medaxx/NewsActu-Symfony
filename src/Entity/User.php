@@ -62,10 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $commentaries;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $rendezVouses;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->commentaries = new ArrayCollection();
+        $this->rendezVouses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -235,6 +241,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($commentary->getAuthor() === $this) {
                 $commentary->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVouses(): Collection
+    {
+        return $this->rendezVouses;
+    }
+
+    public function addRendezVouse(RendezVous $rendezVouse): self
+    {
+        if (!$this->rendezVouses->contains($rendezVouse)) {
+            $this->rendezVouses[] = $rendezVouse;
+            $rendezVouse->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVouse(RendezVous $rendezVouse): self
+    {
+        if ($this->rendezVouses->removeElement($rendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVouse->getUser() === $this) {
+                $rendezVouse->setUser(null);
             }
         }
 

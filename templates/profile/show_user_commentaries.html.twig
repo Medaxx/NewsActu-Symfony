@@ -3,7 +3,16 @@
 {% block body %}
 
     <div class="row mt-3">
-    {% include 'include/_flashes.html.twig' %}
+        {% include 'include/_flashes.html.twig' %}
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-6">
+            Total des commentaires créés : {{ commentaries | length }}
+        </div>
+
     </div>
 
     <div class="row">
@@ -22,17 +31,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% set countIn = 0 %}
+                {% set countOut = 0 %}
 
                 {% if commentaries is not empty %}
                     {% for commentary in commentaries %}
                         {% if commentary.deletedAt is null %}
+                            {%  set countIn = countIn + 1 %}
 
                             <tr>
                                 <td>{{ commentary.comment | slice(0,15) }}</td>
                                 <td>{{ commentary.article.title | slice(0, 10) }}</td>
                                 <td>{{ commentary.createdAt | date('d/m/Y') }}</td>
                                 <td>
-                                    <a href="{{ path('soft_delete_commentary', {'id': commentary.id}) }}" class="btn btn-info" title="Modifier mon profil"><i class="fa fa-trash"></i></a>
+                                    <a href="{{ path('soft_delete_commentary', {'id': commentary.id}) }}" class="btn btn-info" title="Archiver mon commentaire"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -42,6 +54,8 @@
 
                 </tbody>
             </table>
+
+            <p>Total : {{ countIn }}</p>
         </div> {# END .col-6 #}
 
         <div class="col-6 mt-4">
@@ -62,13 +76,14 @@
                 {% if commentaries is not empty %}
                     {% for commentary in commentaries %}
                         {% if commentary.deletedAt is not null %}
+                            {%  set countOut = countOut + 1 %}
 
                             <tr>
                                 <td>{{ commentary.comment | slice(0,15) }}</td>
                                 <td>{{ commentary.article.title | slice(0, 10) }}</td>
                                 <td>{{ commentary.createdAt | date('d/m/Y') }}</td>
                                 <td>
-                                    <a href="{{ path('soft_delete_commentary', {'id': commentary.id}) }}" class="btn btn-info" title="Modifier mon profil"><i class="fa fa-trash-restore"></i></a>
+                                    <a href="{{ path('restore_commentary', {'id': commentary.id}) }}" class="btn btn-info" title="Restaurer mon commentaire"><i class="fa fa-trash-restore"></i></a>
                                 </td>
                             </tr>
 
@@ -78,7 +93,7 @@
 
                 </tbody>
             </table>
-
+            <p>Total : {{ countOut }}</p>
         </div>
 
     </div> {# END .row #}

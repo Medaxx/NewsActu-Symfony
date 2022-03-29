@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon Rendez Vous{% endblock %}
+
+{% block body %}
+    <h1>Modifier son  rendez vous</h1>
+
+    {{ include('rendez_vous/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_rendez_vous_index') }}">Retour à la liste de vos rendez vous</a>
+
+    {{ include('rendez_vous/_delete_form.html.twig') }}
+{% endblock %}

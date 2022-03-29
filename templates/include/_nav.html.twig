@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{path ('default_home')}}">NewsActu</a>
+    <a class="navbar-brand" href="{{path ('default_home')}}">Coiffeur Drancy</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -28,6 +28,9 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfil">
               <li><a class="dropdown-item" href="{{ path ('show_profile')}}">Mes informations</a></li>
               <li><a class="dropdown-item" href="{{ path ('show_user_commentaries')}}">Mes commentaires</a></li>
+              <li><a class="dropdown-item" href="{{ path ('app_rendez_vous_index')}}">Mes rendez-vous</a></li>
+
+
 
 
               {# <li><hr class="dropdown-divider"></li>
@@ -45,6 +48,8 @@
               <li><a class="dropdown-item" href="{{ path ('show_dashboard')}}">Dashboard</a></li>
               <li><a class="dropdown-item" href="{{ path ('create_article')}}">Ajouter un article</a></li>
               <li><a class="dropdown-item" href="{{ path ('create_category')}}">Ajouter une catégorie</a></li>
+              <li><a class="dropdown-item" href="{{ path ('app_prestation_index')}}">Mes prestations</a></li>
+
               {# <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li> #}
             </ul>
