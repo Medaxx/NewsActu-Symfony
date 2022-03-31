@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for rendez_vou in rendez_vouses %}
+        {% for rendez_vou in app.user.rendezVouses %}
             <tr>
                 <td>{{ rendez_vou.user.nom ~ "  " ~ rendez_vou.user.prenom }}</td>
                 <td>{{ rendez_vou.date ? rendez_vou.date|date('Y-m-d') : '' }}</td>

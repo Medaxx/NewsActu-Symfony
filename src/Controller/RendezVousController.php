@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/rendez/vous")
+ * @Route("/rendez/vous")
  */
 class RendezVousController extends AbstractController
 {
