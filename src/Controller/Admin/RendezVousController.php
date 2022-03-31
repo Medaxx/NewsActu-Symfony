@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/rendez/vous")
+ * @Route("/admin/rendez/vous")
  */
 class RendezVousController extends AbstractController
 {
@@ -22,9 +22,7 @@ class RendezVousController extends AbstractController
     public function index(RendezVousRepository $rendezVousRepository): Response
     {
         return $this->render('rendez_vous/index.html.twig', [
-            'rendez_vouses' => $rendezVousRepository->findBy([
-                'user' => $this->getUser()
-            ]),
+            'rendez_vouses' => $rendezVousRepository->findAll(),
         ]);
     }
 

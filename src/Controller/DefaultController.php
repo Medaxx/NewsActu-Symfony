@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Form\SearchFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("", name="render_search_bar", methods={"GET"})
      */
-    public function renderSearchBarInNav(): Response
+    public function renderSearchBarInNav(Request $request): Response
     {
         $form = $this->createForm(SearchFormType::class)->handleRequest($request);
         return $this->render('rendered/search_bar.html.twig', [

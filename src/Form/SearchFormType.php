@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\DataTransfertObject\SearchDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,7 +17,7 @@ class SearchFormType extends AbstractType
             ->add('query', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => "Recherchez par auteur, titre d\'article ou catégorie"
+                    'placeholder' => "Recherchez par auteur, titre d'article ou catégorie"
                 ]
             ])
             ->add('submit', SubmitType::class, [
@@ -24,7 +25,6 @@ class SearchFormType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success'
                 ],
-                'validate' => false,
             ])
         ;
     }
@@ -33,6 +33,8 @@ class SearchFormType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'method' => 'GET',
+            'data_class' => SearchDto::class
         ]);
     }
 }
